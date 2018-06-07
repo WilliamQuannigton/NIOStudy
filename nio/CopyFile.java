@@ -1,0 +1,40 @@
+
+
+import java.io.*;
+import java.nio.*;
+import java.nio.channels.*;
+
+public class CopyFile
+{
+   public static void main( String args[] ) throws Exception {
+//    if (args.length<2) {
+//      System.err.println( "Usage: java CopyFile infile outfile" );
+//      System.exit( 1 );
+//    }
+
+    String infile = "D:\\eclipse-workspace\\NIOTest\\src\\read.txt";
+    String outfile = "D:\\eclipse-workspace\\NIOTest\\src\\write.txt";
+
+    FileInputStream fin = new FileInputStream( infile );
+    FileOutputStream fout = new FileOutputStream( outfile );
+
+    FileChannel fcin = fin.getChannel();
+    FileChannel fcout = fout.getChannel();
+
+    ByteBuffer buffer = ByteBuffer.allocate( 1024 );
+
+    while (true) {
+      buffer.clear();
+
+      int r = fcin.read( buffer );
+
+      if (r==-1) {
+        break;
+      }
+
+      buffer.flip();
+
+      fcout.write( buffer );
+    }
+  }
+}
